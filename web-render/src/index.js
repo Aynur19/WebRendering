@@ -62,6 +62,8 @@ function addBall(scene) {
     .onChange(function(newValue) {
         ballMesh.visible = newValue;
     }).name(`${ballMesh.name} is visible`);
+   
+    ballGUI.open();
 
     scene.add(ballMesh);
 }
@@ -195,37 +197,46 @@ function addPlane(scene) {
     const textureLoader = new THREE.TextureLoader();
     const fieldMat = getFieldMat(textureLoader, textScale);
 
-    let footballFieldMesh = new THREE.Mesh(plane, fieldMat);
-    let footballFieldGUI = gui.addFolder('Football Field');
-    footballFieldGUI.add(footballFieldMesh.position, 'x', -300, 300, 1)
+    let fieldMesh = new THREE.Mesh(plane, fieldMat);
+    fieldMesh.name = 'Footbal Field';
+
+    let fieldGUI = gui.addFolder('Football Field');
+    fieldGUI.add(fieldMesh.position, 'x', -300, 300, 1)
     .onChange(function(newValue) {
-        footballFieldMesh.position.setX(newValue);
+        fieldMesh.position.setX(newValue);
     }).name('Position X');
-    footballFieldGUI.add(footballFieldMesh.position, 'y', -300, 300, 1)
+    fieldGUI.add(fieldMesh.position, 'y', -300, 300, 1)
     .onChange(function(newValue) {
-        footballFieldMesh.position.setY(newValue);
+        fieldMesh.position.setY(newValue);
     }).name('Position Y');
-    footballFieldGUI.add(footballFieldMesh.position, 'z', -300, 300, 1)
+    fieldGUI.add(fieldMesh.position, 'z', -300, 300, 1)
     .onChange(function(newValue) {
-        footballFieldMesh.position.setZ(newValue);
+        fieldMesh.position.setZ(newValue);
     }).name('Position Z');
 
-    footballFieldGUI.add(footballFieldMesh.rotation, 'x', 0, Math.PI*2, 0.01)
+    fieldGUI.add(fieldMesh.rotation, 'x', 0, Math.PI*2, 0.01)
     .onChange(function(newValue) {
-        footballFieldMesh.rotateX(newValue);
+        fieldMesh.rotateX(newValue);
     }).name('Rotation X');
-    footballFieldGUI.add(footballFieldMesh.rotation, 'y', 0, Math.PI*2, 0.01)
+    fieldGUI.add(fieldMesh.rotation, 'y', 0, Math.PI*2, 0.01)
     .onChange(function(newValue) {
-        footballFieldMesh.rotateY(newValue);
+        fieldMesh.rotateY(newValue);
     }).name('Rotation Y');
-    footballFieldGUI.add(footballFieldMesh.rotation, 'z', 0, Math.PI*2, 0.01)
+    fieldGUI.add(fieldMesh.rotation, 'z', 0, Math.PI*2, 0.01)
     .onChange(function(newValue) {
-        footballFieldMesh.rotateZ(newValue);
+        fieldMesh.rotateZ(newValue);
     }).name('Rotation Z');
 
-    footballFieldMesh.position.set(0, 0, 0);
-    footballFieldMesh.name = 'foorballField';
-    scene.add(footballFieldMesh);
+    fieldGUI.add(fieldMesh, 'visible')
+    .onChange(function(newValue) {
+        fieldMesh.visible = newValue;
+    }).name(`${fieldMesh.name} is visible`);
+
+    fieldGUI.open();
+
+    fieldMesh.position.set(0, 0, 0);
+
+    scene.add(fieldMesh);
 }
 
 function render() {
