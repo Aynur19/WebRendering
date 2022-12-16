@@ -6,72 +6,120 @@ const THREE = require('three')
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import * as Stats from '../node_modules/stats-js/build/stats';
 import * as dat from 'dat.gui';
+import * as fieldObj from './field';
+import * as ballObj from './ball';
+import * as gateLeavesObj from './gateLeaves';
 
 let gui = new dat.GUI({name: 'Settings'});
 let camera, scene, renderer, light;
 let orbitControls;
 let stats = new Stats();
 
+const textureLoader = new THREE.TextureLoader();
 
-function addBall(scene) {
-    const textureLoader = new THREE.TextureLoader();
-    let ballGeom = new THREE.SphereGeometry(1, 128, 128);
-    let ballMat = new THREE.MeshStandardMaterial({color: 0x0000ff, roughness: 0});
-    ballMat.map = textureLoader.load('./textures/ball.png');
-    ballMat.map.wrapS = ballMat.map.wrapT = THREE.WrapAroundEnding;
-    ballMat.map.repeat.set(2, 2);
+// class CustomSinCurve extends THREE.Curve {
+//     constructor(scale) {
+//       super();
+//       this.scale = scale;
+//     }
+//     getPoint(t) {
+//       const tx = t * 3 - 1.5;
+//       const ty = Math.sin(2 * Math.PI * t);
+//       const tz = 0;
+//       return new THREE.Vector3(tx, ty, tz).multiplyScalar(this.scale);
+//     }
+// }
+  
+// const path = new CustomSinCurve(1);
+// const tubularSegments = 20;  // ui: tubularSegments
+// const radius = 1;  // ui: radius
+// const radialSegments = 8;  // ui: radialSegments
+// const closed = false;  // ui: closed
+// const geometry = new THREE.TubeGeometry(path, tubularSegments, radius, radialSegments, closed);
 
-    let ballMesh = new THREE.Mesh(ballGeom, ballMat);
-    ballMesh.position.set(0, 0, 2);
-    ballMesh.name = 'Ball';
 
-    let ballGUI = gui.addFolder('Ball');
+// function addVor(scene) {
+//     class CustomSinCurve extends THREE.Curve {
+//         constructor(scale) {
+//           super();
+//           this.scale = scale;
+//         }
+
+//         getPoint(t) {
+//         //   const tx = t * 3 - 1.5;
+//           const tx = t - t;
+//           const ty = t;//Math.sin(2 * Math.PI * t);
+//           const tz = t - t;
+//           return new THREE.Vector3(tx, ty, tz).multiplyScalar(this.scale);
+//         }
+//     }
+      
+//     const path = new CustomSinCurve(7.32);
+//     const tubularSegments = 256;  // ui: tubularSegments
+//     const radius = 0.06;  // ui: radius
+//     const radialSegments = 32;  // ui: radialSegments
+//     const closed = false;  // ui: closed
+//     const geometry = new THREE.TubeGeometry(path, tubularSegments, radius, radialSegments, closed);
+
+//     const textureLoader = new THREE.TextureLoader();
+//     let vorMat = new THREE.MeshStandardMaterial({color: 0x0000ff, roughness: 0, side: THREE.DoubleSide});
+//     // ballMat.map = textureLoader.load('./textures/ball.png');
+//     // ballMat.map.wrapS = ballMat.map.wrapT = THREE.WrapAroundEnding;
+//     // ballMat.map.repeat.set(2, 2);
+
+//     let vorMesh = new THREE.Mesh(geometry, vorMat);
+//     vorMesh.name = 'Vor';
+
+//     let vorGUI = gui.addFolder('Vor');
     
-    ballGUI.add(ballMesh.position, 'x', -300, 300, 1)
-    .onChange(function(newValue) {
-        ballMesh.position.setX(newValue);
-    }).name('Position X');
+//     vorGUI.add(vorMesh.position, 'x', -300, 300, 1)
+//     .onChange(function(newValue) {
+//         vorMesh.position.setX(newValue);
+//     }).name('Position X');
     
-    ballGUI.add(ballMesh.position, 'y', -300, 300, 1)
-    .onChange(function(newValue) {
-        ballMesh.position.setY(newValue);
-    }).name('Position Y');
+//     vorGUI.add(vorMesh.position, 'y', -300, 300, 1)
+//     .onChange(function(newValue) {
+//         vorMesh.position.setY(newValue);
+//     }).name('Position Y');
     
-    ballGUI.add(ballMesh.position, 'z', -300, 300, 1)
-    .onChange(function(newValue) {
-        ballMesh.position.setZ(newValue);
-    }).name('Position Z');
+//     vorGUI.add(vorMesh.position, 'z', -300, 300, 1)
+//     .onChange(function(newValue) {
+//         vorMesh.position.setZ(newValue);
+//     }).name('Position Z');
 
-    ballGUI.add(ballMesh.rotation, 'x', 0, Math.PI*2, 0.01)
-    .onChange(function(newValue) {
-        ballMesh.rotateX(newValue);
-    }).name('Rotation X');
+//     vorGUI.add(vorMesh.rotation, 'x', 0, Math.PI*2, 0.01)
+//     .onChange(function(newValue) {
+//         vorMesh.rotateX(newValue);
+//     }).name('Rotation X');
     
-    ballGUI.add(ballMesh.rotation, 'y', 0, Math.PI*2, 0.01)
-    .onChange(function(newValue) {
-        ballMesh.rotateY(newValue);
-    }).name('Rotation Y');
+//     vorGUI.add(vorMesh.rotation, 'y', 0, Math.PI*2, 0.01)
+//     .onChange(function(newValue) {
+//         vorMesh.rotateY(newValue);
+//     }).name('Rotation Y');
     
-    ballGUI.add(ballMesh.rotation, 'z', 0, Math.PI*2, 0.01)
-    .onChange(function(newValue) {
-        ballMesh.rotateZ(newValue);
-    }).name('Rotation Z');
+//     vorGUI.add(vorMesh.rotation, 'z', 0, Math.PI*2, 0.01)
+//     .onChange(function(newValue) {
+//         vorMesh.rotateZ(newValue);
+//     }).name('Rotation Z');
 
 
-    ballGUI.add(ballMesh, 'visible')
-    .onChange(function(newValue) {
-        ballMesh.visible = newValue;
-    }).name(`${ballMesh.name} is visible`);
+//     vorGUI.add(vorMesh, 'visible')
+//     .onChange(function(newValue) {
+//         vorMesh.visible = newValue;
+//     }).name(`${vorMesh.name} is visible`);
    
-    ballGUI.open();
+//     vorGUI.open();
 
-    scene.add(ballMesh);
-}
+//     vorMesh.position.set(0, 0, 20);
+//     scene.add(vorMesh);
+// }
 
-function addStats() {
-    stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
-    document.body.appendChild(stats.dom);    
-}
+
+
+// function addStats() {
+//     stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
+//     document.body.appendChild(stats.dom);    
+// }
 
 function settingCamera() {
     const fov = 50;
@@ -149,94 +197,11 @@ function sceneInit() {
     scene = new THREE.Scene();
     scene.add(light);
 
-    addPlane(scene);
-    addBall(scene);
-}
-
-function addMap(map, scale) {
-    map.wrapS = map.wrapT = THREE.RepeatWrapping;
-    map.repeat.set(scale.x, scale.y);
-}
-
-function getFieldMat(textureLoader, textScale) {
-    const fieldMat = new THREE.MeshStandardMaterial();
-
-    fieldMat.map = textureLoader.load('./textures/Grass_1K/Grass_1K_Albedo.png');
-    addMap(fieldMat.map, textScale);
-    
-    fieldMat.aoMap = textureLoader.load('./textures/Grass_1K/Grass_1K_AO.png');
-    addMap(fieldMat.aoMap, textScale);
-    
-    fieldMat.displacementMap = textureLoader.load('./textures/Grass_1K/Grass_1K_Height.png');
-    addMap(fieldMat.displacementMap, textScale);
-
-    fieldMat.normalMap = textureLoader.load('./textures/Grass_1K/Grass_1K_Normal.png');
-    addMap(fieldMat.normalMap, textScale);
-
-    fieldMat.roughnessMap = textureLoader.load('./textures/Grass_1K/Grass_1K_Roughness.png');
-    addMap(fieldMat.roughnessMap, textScale);
-    
-    fieldMat.metalnessMap = textureLoader.load('./textures/Grass_1K/Grass_1K_Metallic.png');
-    addMap(fieldMat.metalnessMap, textScale);
-
-    return fieldMat;
-}
-
-function addPlane(scene) {
-    let planeSize = {
-        x: 90,
-        y: 45
-    };
-
-    let plane = new THREE.PlaneGeometry(planeSize.x, planeSize.y);
-
-    const textScale = {
-        x: 10, 
-        y: 5
-    };
-    const textureLoader = new THREE.TextureLoader();
-    const fieldMat = getFieldMat(textureLoader, textScale);
-
-    let fieldMesh = new THREE.Mesh(plane, fieldMat);
-    fieldMesh.name = 'Footbal Field';
-
-    let fieldGUI = gui.addFolder('Football Field');
-    fieldGUI.add(fieldMesh.position, 'x', -300, 300, 1)
-    .onChange(function(newValue) {
-        fieldMesh.position.setX(newValue);
-    }).name('Position X');
-    fieldGUI.add(fieldMesh.position, 'y', -300, 300, 1)
-    .onChange(function(newValue) {
-        fieldMesh.position.setY(newValue);
-    }).name('Position Y');
-    fieldGUI.add(fieldMesh.position, 'z', -300, 300, 1)
-    .onChange(function(newValue) {
-        fieldMesh.position.setZ(newValue);
-    }).name('Position Z');
-
-    fieldGUI.add(fieldMesh.rotation, 'x', 0, Math.PI*2, 0.01)
-    .onChange(function(newValue) {
-        fieldMesh.rotateX(newValue);
-    }).name('Rotation X');
-    fieldGUI.add(fieldMesh.rotation, 'y', 0, Math.PI*2, 0.01)
-    .onChange(function(newValue) {
-        fieldMesh.rotateY(newValue);
-    }).name('Rotation Y');
-    fieldGUI.add(fieldMesh.rotation, 'z', 0, Math.PI*2, 0.01)
-    .onChange(function(newValue) {
-        fieldMesh.rotateZ(newValue);
-    }).name('Rotation Z');
-
-    fieldGUI.add(fieldMesh, 'visible')
-    .onChange(function(newValue) {
-        fieldMesh.visible = newValue;
-    }).name(`${fieldMesh.name} is visible`);
-
-    fieldGUI.open();
-
-    fieldMesh.position.set(0, 0, 0);
-
-    scene.add(fieldMesh);
+    fieldObj.addField(scene, textureLoader, gui);
+    ballObj.addBall(scene, textureLoader, gui);
+    gateLeavesObj.addGateLeaves(scene, textureLoader, gui, 'Gate Leaves 1', [-40, 0, 0.65]);
+    gateLeavesObj.addGateLeaves(scene, textureLoader, gui, 'Gate Leaves 2', [40, 0, 0.65]);
+    // addVor(scene);
 }
 
 function render() {

@@ -10,6 +10,21 @@ const infoColor = (_message) =>
 }
 
 module.exports = {
+  // entry: {
+  //   main: './src/index',
+  //  /**
+  //  /* object is passed to load script at global scope and exec immediately
+  //  /* but if you don't need then simply do:
+  //  /* myCustomScriptEntry: './src/myCustomScript'
+  //  */
+  //   myCustomScriptEntry: { 
+  //     import: './src/field',
+  //     library: {
+  //       name: 'myCustomScriptEntry',
+  //       type: 'var',
+  //     },
+  //   },
+  // },
   module: {
     rules: [
       {
@@ -20,6 +35,10 @@ module.exports = {
             // options: {minimise: true}
           }
         ]
+      },
+      {
+        test: /.js?$/,
+        loader: "babel-loader"
       },
 
       // Images
@@ -41,7 +60,8 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       template: './src/index.html',
-      filename: "./index.html"
+      filename: "./index.html",
+      // excludeChunks: ['myCustomScriptEntry']
     }),
   ],
   stats: 'errors-warnings',
