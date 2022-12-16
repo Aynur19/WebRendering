@@ -3,7 +3,11 @@
 const THREE = require('three')
 import * as dat from 'dat.gui';
 import * as H from './helper';
+import { gsap } from "gsap";
 
+let data = {
+    isAnimated: false,
+};
 /**
  * 
  * @param {THREE.Scene} scene 
@@ -60,8 +64,19 @@ export function addBall(scene, textureLoader, gui, name, pos) {
     ballGUI.add(ballMesh, 'visible').onChange(function(newValue) {
         ballMesh.visible = newValue;
     }).name(`${ballMesh.name} is visible`);
+
+    ballGUI.add(data, 'isAnimated').onChange(function(value) {
+        if(ballMesh.rotation.x > 0) {
+            gsap.to(ballMesh.rotation, { duration: 5, x: -10 });
+        }
+        else {
+            gsap.to(ballMesh.rotation, { duration: 5, x: 10 });
+        }
+    }).name('GSAP (to())');
    
     ballMesh.position.set(pos[0], pos[1], pos[2]);
 
     scene.add(ballMesh);
+
+    return ballMesh;
 }

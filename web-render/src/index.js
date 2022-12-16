@@ -14,6 +14,8 @@ import * as H from './helper';
 import * as env from './env'
 import * as camHelper from './camera'
 
+
+
 let gui = new dat.GUI({name: 'Settings'});
 let camera, scene, renderer, light;
 let orbitControls, flyControls;
@@ -101,11 +103,13 @@ function sceneInit() {
 
     env.addEnvMap(scene);
     fieldObj.addField(scene, textureLoader, gui);
-    ballObj.addBall(scene, textureLoader, gui, 'Ball', [0, H.ballR, 0]);
+    let ball = ballObj.addBall(scene, textureLoader, gui, 'Ball', [0, H.ballR, 0]);
     gateLeavesObj.addGateLeaves(scene, textureLoader, gui, 'Gate Leaves 1', [0, 0, -40]);
     gateLeavesObj.addGateLeaves(scene, textureLoader, gui, 'Gate Leaves 2', [0, 0, 40]);
  
     benchObj.addBench(scene, textureLoader, gui, 4, [-15, -20]);
+
+
 }
 
 function render() {
@@ -120,7 +124,6 @@ function onWindowResize() {
     renderer.setSize(window.innerWidth, window.innerHeight);
     render()
 }
-
 
 
 /**
