@@ -4,7 +4,6 @@
 // const THREE = require('three');
 const THREE = require('three')
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
-import { FlyControls } from 'three/examples/jsm/controls/FlyControls'
 import * as Stats from '../node_modules/stats-js/build/stats';
 import * as dat from 'dat.gui';
 import * as fieldObj from './field';
@@ -67,9 +66,6 @@ function settingRenderer() {
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
 
-    // renderer.domElement.contentWindow.addEventListener('keyup', flyControls.keyup.bind(flyControls) );
-    // renderer.domElement.contentWindow.addEventListener('keydown', flyControls.keydown.bind(flyControls) );
-
     document.body.appendChild(renderer.domElement);
 }
 
@@ -80,29 +76,8 @@ function settingOrbitControls() {
     orbitControls.update();
     orbitControls.addEventListener('change', render);
 
-    // Adding orbit controls to camera (expected by AMI image widgets).
     camera.controls = orbitControls;
 }
-
-// function settingFlyControls() {
-//     flyControls = new FlyControls(camera, renderer.domElement);
-//     // flyControls.enablePan = true;
-//     // flyControls.enableKeys = false;
-//     // orbitControls.update();
-//     flyControls.dragToLook = true;
-//     flyControls.movementSpeed = 3;
-//     flyControls.rollSpeed = Math.PI / 24;
-//     flyControls.autoForward = false;
-//     flyControls.addEventListener('change', render);
-//     flyControls.addEventListener('change', (evnt) => {
-//         drawDebugInfo(renderer.domElement, ctx_debug, camera, flyControls);
-//     });
-
-//     // Adding orbit controls to camera (expected by AMI image widgets).
-//     camera.controls = flyControls;
-// }
-
-
 
 function settingLight() {
     light = new THREE.PointLight(0xffffff, 1.5);
@@ -116,10 +91,7 @@ function sceneInit() {
     window.addEventListener('resize', onWindowResize, false);
 
     settingOrbitControls();
-    // settingFlyControls();
     settingLight();
-
-
 
     scene = new THREE.Scene();
     scene.add(light);
@@ -131,8 +103,6 @@ function sceneInit() {
     benchObj.addBenchLeg(scene, textureLoader, gui, 'Bench 1', [-16, -20, H.bench.legH / 2]);
     benchObj.addBenchLeg(scene, textureLoader, gui, 'Bench 2', [-14, -20, H.bench.legH / 2]);
     benchObj.addBenchSeat(scene, textureLoader, gui, 'Bench Seat 2', [-15, -20, H.bench.legH + H.bench.seatH / 2]);
-    // benchObj.addBench(scene, textureLoader, gui, 'Bench Seat 2', H.bench.seatPos);
-    // addVor(scene);
 }
 
 function render() {
@@ -160,7 +130,6 @@ const tick = () =>
     const elapsedTime = clock.getElapsedTime();
     render();
 
-    // Call tick again on the next frame
     window.requestAnimationFrame(tick);
 }
 

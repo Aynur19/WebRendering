@@ -61,11 +61,7 @@ export function addBall(scene, textureLoader, gui, name, pos) {
         ballMesh.visible = newValue;
     }).name(`${ballMesh.name} is visible`);
    
-    // ballGUI.open();
-
-    // ballMesh.visible = false;
     ballMesh.position.set(pos[0], pos[1], pos[2]);
-    ballMesh.updateMatrixWorld();
 
     scene.add(ballMesh);
 }
