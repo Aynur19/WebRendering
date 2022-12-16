@@ -9,6 +9,7 @@ import * as dat from 'dat.gui';
 import * as fieldObj from './field';
 import * as ballObj from './ball';
 import * as gateLeavesObj from './gateLeaves';
+import * as benchObj from './bench';
 
 let gui = new dat.GUI({name: 'Settings'});
 let camera, scene, renderer, light;
@@ -54,7 +55,7 @@ function settingCamera() {
     }).name('Position Z');
     cameraGUI.open();
 
-    camera.position.set(0, 0, 80);
+    camera.position.set(0, 0, 20);
 }
 
 function settingRenderer() {
@@ -98,6 +99,7 @@ function sceneInit() {
     ballObj.addBall(scene, textureLoader, gui);
     gateLeavesObj.addGateLeaves(scene, textureLoader, gui, 'Gate Leaves 1', [-40, 0, 0.65]);
     gateLeavesObj.addGateLeaves(scene, textureLoader, gui, 'Gate Leaves 2', [40, 0, 0.65]);
+    benchObj.addBenchLeg(scene, textureLoader, gui, 'Bench 1', [0, 0, 1.25]);
     // addVor(scene);
 }
 

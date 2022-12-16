@@ -11,7 +11,7 @@ import * as dat from 'dat.gui';
  * @param {dat.GUI} gui
  */
 export function addBall(scene, textureLoader, gui) {
-    let ballGeom = new THREE.SphereGeometry(1, 128, 128);
+    let ballGeom = new THREE.SphereGeometry(0.11, 128, 128);
     let ballMat = new THREE.MeshStandardMaterial({color: 0x0000ff, roughness: 0.5});
     
     ballMat.map = textureLoader.load('./textures/ball.png');
@@ -61,7 +61,7 @@ export function addBall(scene, textureLoader, gui) {
    
     ballGUI.open();
 
-    ballMesh.visible = false;
+    // ballMesh.visible = false;
     ballMesh.position.set(0, 0, 2);
 
     scene.add(ballMesh);

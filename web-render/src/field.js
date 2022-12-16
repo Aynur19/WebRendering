@@ -5,13 +5,13 @@ import * as dat from 'dat.gui';
 
 
 const fieldSize = {
-    x: 90,
-    y: 45
+    x: 100,
+    y: 50
 };
 
 const fieldTextScale = {
-    x: 10,
-    y: 5
+    x: 12,
+    y: 6
 };
 
 /**
@@ -105,10 +105,10 @@ export function addField(scene, textureLoader, gui) {
         fieldMesh.visible = newValue;
     }).name(`${fieldMesh.name} is visible`);
 
-    // fieldGUI.open();
+    fieldGUI.open();
 
     fieldMesh.position.set(0, 0, 0);
-    fieldMesh.visible = false;
+    // fieldMesh.visible = false;
 
     scene.add(fieldMesh);
 }
