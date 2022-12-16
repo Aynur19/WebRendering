@@ -20,7 +20,10 @@ export const paths = {
     benchSeatDispMap: './textures/Wood_2K/Wood_2K_Displacement.jpg',
     benchSeatNormalMap: './textures/Wood_2K/Wood_2K_Normal.jpg',
     benchSeatRoughnessMap: './textures/Wood_2K/Wood_2K_Roughness.jpg',
-}
+
+    envMap: './textures/CubeMaps/',
+    envMapExts: ['px.png', 'nx.png', 'py.png', 'ny.png', 'pz.png', 'nz.png'],
+};
 
 export const bench = {
     legH: 0.4,

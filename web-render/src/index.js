@@ -11,6 +11,7 @@ import * as ballObj from './ball';
 import * as gateLeavesObj from './gateLeaves';
 import * as benchObj from './bench';
 import * as H from './helper';
+import * as env from './env'
 
 let gui = new dat.GUI({name: 'Settings'});
 let camera, scene, renderer, light;
@@ -96,13 +97,12 @@ function sceneInit() {
     scene = new THREE.Scene();
     scene.add(light);
 
+    env.addEnvMap(scene);
     fieldObj.addField(scene, textureLoader, gui);
     ballObj.addBall(scene, textureLoader, gui, 'Ball', [0, 0, H.ballR]);
     gateLeavesObj.addGateLeaves(scene, textureLoader, gui, 'Gate Leaves 1', [-40, 0, 0.65]);
     gateLeavesObj.addGateLeaves(scene, textureLoader, gui, 'Gate Leaves 2', [40, 0, 0.65]);
-    // benchObj.addBenchLeg(scene, textureLoader, gui, 'Bench 1', [-16, -20, H.bench.legH / 2]);
-    // benchObj.addBenchLeg(scene, textureLoader, gui, 'Bench 2', [-14, -20, H.bench.legH / 2]);
-    // benchObj.addBenchSeat(scene, textureLoader, gui, 'Bench Seat 2', [-15, -20, H.bench.legH + H.bench.seatH / 2]);
+ 
     benchObj.addBench(scene, textureLoader, gui, 4, [-15, -20]);
 }
 
