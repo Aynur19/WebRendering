@@ -2,7 +2,7 @@
 
 const THREE = require('three')
 import * as dat from 'dat.gui';
-
+import * as H from './helper';
 
 const fieldSize = {
     x: 100,
@@ -76,6 +76,8 @@ export function addField(scene, textureLoader, gui) {
     fieldGUI.open();
 
     fieldMesh.position.set(0, 0, 0);
+    fieldMesh.rotateZ(H.degInRad(90));
+    fieldMesh.rotateY(H.degInRad(90));
     fieldMesh.updateMatrixWorld();
 
     scene.add(fieldMesh);

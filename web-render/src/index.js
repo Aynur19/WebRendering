@@ -12,6 +12,7 @@ import * as gateLeavesObj from './gateLeaves';
 import * as benchObj from './bench';
 import * as H from './helper';
 import * as env from './env'
+import * as camHelper from './camera'
 
 let gui = new dat.GUI({name: 'Settings'});
 let camera, scene, renderer, light;
@@ -21,44 +22,44 @@ let stats = new Stats();
 const textureLoader = new THREE.TextureLoader();
 
 
-function settingCamera() {
-    const fov = 50;
-    const aspect = window.innerWidth / window.innerHeight;
-    const near = 0.1;
-    const far = 2000;
+// function settingCamera() {
+//     const fov = 50;
+//     const aspect = window.innerWidth / window.innerHeight;
+//     const near = 0.1;
+//     const far = 2000;
 
-    camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+//     camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
 
-    let cameraGUI = gui.addFolder('Camera');
-    cameraGUI.add(camera, 'fov', 0, 100, 1).onChange(function(newValue) {
-        camera.fov = newValue;
-        camera.updateProjectionMatrix();
-    }).name('Field of View');
-    cameraGUI.add(camera, 'far', 0, 3000, 1).onChange(function(newValue) {
-        camera.far = newValue;
-        camera.updateProjectionMatrix();
-    }).name('Depth of View');
-    cameraGUI.add(camera, 'near', 0, 50, 0.1).onChange(function(newValue) {
-        camera.near = newValue;
-        camera.updateProjectionMatrix();
-    }).name('Near of View');
-    cameraGUI.add(camera, 'aspect', 0, 4, 0.05).onChange(function(newValue) {
-        camera.aspect = newValue;
-        camera.updateProjectionMatrix();
-    }).name('Aspect Ratio');
-    cameraGUI.add(camera.position, 'x', -300, 300, 1).onChange(function(newValue) {
-        camera.position.setX(newValue);
-    }).name('Position X');
-    cameraGUI.add(camera.position, 'y', -300, 300, 1).onChange(function(newValue) {
-        camera.position.setY(newValue);
-    }).name('Position Y');
-    cameraGUI.add(camera.position, 'z', -300, 300, 1).onChange(function(newValue) {
-        camera.position.setZ(newValue);
-    }).name('Position Z');
-    cameraGUI.open();
+//     let cameraGUI = gui.addFolder('Camera');
+//     cameraGUI.add(camera, 'fov', 0, 100, 1).onChange(function(newValue) {
+//         camera.fov = newValue;
+//         camera.updateProjectionMatrix();
+//     }).name('Field of View');
+//     cameraGUI.add(camera, 'far', 0, 3000, 1).onChange(function(newValue) {
+//         camera.far = newValue;
+//         camera.updateProjectionMatrix();
+//     }).name('Depth of View');
+//     cameraGUI.add(camera, 'near', 0, 50, 0.1).onChange(function(newValue) {
+//         camera.near = newValue;
+//         camera.updateProjectionMatrix();
+//     }).name('Near of View');
+//     cameraGUI.add(camera, 'aspect', 0, 4, 0.05).onChange(function(newValue) {
+//         camera.aspect = newValue;
+//         camera.updateProjectionMatrix();
+//     }).name('Aspect Ratio');
+//     cameraGUI.add(camera.position, 'x', -300, 300, 1).onChange(function(newValue) {
+//         camera.position.setX(newValue);
+//     }).name('Position X');
+//     cameraGUI.add(camera.position, 'y', -300, 300, 1).onChange(function(newValue) {
+//         camera.position.setY(newValue);
+//     }).name('Position Y');
+//     cameraGUI.add(camera.position, 'z', -300, 300, 1).onChange(function(newValue) {
+//         camera.position.setZ(newValue);
+//     }).name('Position Z');
+//     cameraGUI.open();
 
-    camera.position.set(0, 0, 20);
-}
+//     camera.position.set(H.camera.initPos.x, H.camera.initPos.y, H.camera.initPos.z);
+// }
 
 function settingRenderer() {
     const canvas = document.querySelector('#c');
@@ -86,7 +87,8 @@ function settingLight() {
 }
 
 function sceneInit() {
-    settingCamera();
+    // settingCamera();
+    camera = camHelper.settingCamera(gui);
     settingRenderer();
 
     window.addEventListener('resize', onWindowResize, false);
@@ -99,9 +101,9 @@ function sceneInit() {
 
     env.addEnvMap(scene);
     fieldObj.addField(scene, textureLoader, gui);
-    ballObj.addBall(scene, textureLoader, gui, 'Ball', [0, 0, H.ballR]);
-    gateLeavesObj.addGateLeaves(scene, textureLoader, gui, 'Gate Leaves 1', [-40, 0, 0.65]);
-    gateLeavesObj.addGateLeaves(scene, textureLoader, gui, 'Gate Leaves 2', [40, 0, 0.65]);
+    ballObj.addBall(scene, textureLoader, gui, 'Ball', [0, H.ballR, 0]);
+    gateLeavesObj.addGateLeaves(scene, textureLoader, gui, 'Gate Leaves 1', [0, 0, -40]);
+    gateLeavesObj.addGateLeaves(scene, textureLoader, gui, 'Gate Leaves 2', [0, 0, 40]);
  
     benchObj.addBench(scene, textureLoader, gui, 4, [-15, -20]);
 }

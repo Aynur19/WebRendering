@@ -68,43 +68,46 @@ export function addBenchLeg(scene, textureLoader, gui, name, pos) {
     let benchLegMesh = getBenchLeg(textureLoader, gui); 
     benchLegMesh.name = name;
 
-    let benchGUI = gui.addFolder(name);
+    // let benchGUI = gui.addFolder(name);
 
-    //#region Bench Leg Position
-    benchGUI.add(benchLegMesh.position, 'x', -50, 50, 0.01).onChange(function(newValue) {
-        benchLegMesh.position.setX(newValue);
-    }).name('Position X');
+    // //#region Bench Leg Position
+    // benchGUI.add(benchLegMesh.position, 'x', -50, 50, 0.01).onChange(function(newValue) {
+    //     benchLegMesh.position.setX(newValue);
+    // }).name('Position X');
     
-    benchGUI.add(benchLegMesh.position, 'y', -25, 25, 0.01).onChange(function(newValue) {
-        benchLegMesh.position.setY(newValue);
-    }).name('Position Y');
+    // benchGUI.add(benchLegMesh.position, 'y', -25, 25, 0.01).onChange(function(newValue) {
+    //     benchLegMesh.position.setY(newValue);
+    // }).name('Position Y');
     
-    benchGUI.add(benchLegMesh.position, 'z', 0, 5, 0.01).onChange(function(newValue) {
-        benchLegMesh.position.setZ(newValue);
-    }).name('Position Z');
-    //#endregion
+    // benchGUI.add(benchLegMesh.position, 'z', 0, 5, 0.01).onChange(function(newValue) {
+    //     benchLegMesh.position.setZ(newValue);
+    // }).name('Position Z');
+    // //#endregion
 
-    //#region Bench Leg Rotation
-    benchGUI.add(benchLegMesh.rotation, 'x', -H.maxAngle, H.maxAngle, 0.01).onChange(function(newValue) {
-        benchLegMesh.rotateX(H.getAngle(newValue));
-    }).name('Rotation X');
+    // //#region Bench Leg Rotation
+    // benchGUI.add(benchLegMesh.rotation, 'x', -H.maxAngle, H.maxAngle, 0.01).onChange(function(newValue) {
+    //     benchLegMesh.rotateX(H.getAngleDiff(newValue));
+    // }).name('Rotation X');
     
-    benchGUI.add(benchLegMesh.rotation, 'y', -H.maxAngle, H.maxAngle, 0.01).onChange(function(newValue) {
-        benchLegMesh.rotateY(H.getAngle(newValue));
-    }).name('Rotation Y');
+    // benchGUI.add(benchLegMesh.rotation, 'y', -H.maxAngle, H.maxAngle, 0.01).onChange(function(newValue) {
+    //     benchLegMesh.rotateY(H.getAngleDiff(newValue));
+    // }).name('Rotation Y');
     
-    benchGUI.add(benchLegMesh.rotation, 'z', -H.maxAngle, H.maxAngle, 0.01).onChange(function(newValue) {
-        benchLegMesh.rotateZ(H.getAngle(newValue));
-    }).name('Rotation Z');
-    //#endregion
+    // benchGUI.add(benchLegMesh.rotation, 'z', -H.maxAngle, H.maxAngle, 0.01).onChange(function(newValue) {
+    //     benchLegMesh.rotateZ(H.getAngleDiff(newValue));
+    // }).name('Rotation Z');
+    // //#endregion
 
-    benchGUI.add(benchLegMesh, 'visible')
-    .onChange(function(newValue) {
-        benchLegMesh.visible = newValue;
-    }).name(`${benchLegMesh.name} is visible`);
+    // benchGUI.add(benchLegMesh, 'visible')
+    // .onChange(function(newValue) {
+    //     benchLegMesh.visible = newValue;
+    // }).name(`${benchLegMesh.name} is visible`);
    
-    benchGUI.open();
+    // benchGUI.open();
 
+    benchLegMesh.position.set(0, 0, 0);
+    benchLegMesh.rotateZ(H.degInRad(90));
+    benchLegMesh.rotateY(H.degInRad(90));
     benchLegMesh.position.set(pos[0], pos[1], pos[2]);
 
     scene.add(benchLegMesh);
@@ -121,43 +124,46 @@ export function addBenchSeat(scene, textureLoader, gui, name, pos) {
     let benchSeatMesh = getBenchSeat(textureLoader, gui); 
     benchSeatMesh.name = name;
 
-    let benchGUI = gui.addFolder(name);
+    // let benchGUI = gui.addFolder(name);
 
-    //#region Bench Leg Position
-    benchGUI.add(benchSeatMesh.position, 'x', -50, 50, 0.01).onChange(function(newValue) {
-        benchSeatMesh.position.setX(newValue);
-    }).name('Position X');
+    // //#region Bench Leg Position
+    // benchGUI.add(benchSeatMesh.position, 'x', -50, 50, 0.01).onChange(function(newValue) {
+    //     benchSeatMesh.position.setX(newValue);
+    // }).name('Position X');
     
-    benchGUI.add(benchSeatMesh.position, 'y', -25, 25, 0.01).onChange(function(newValue) {
-        benchSeatMesh.position.setY(newValue);
-    }).name('Position Y');
+    // benchGUI.add(benchSeatMesh.position, 'y', -25, 25, 0.01).onChange(function(newValue) {
+    //     benchSeatMesh.position.setY(newValue);
+    // }).name('Position Y');
     
-    benchGUI.add(benchSeatMesh.position, 'z', 0, 5, 0.01).onChange(function(newValue) {
-        benchSeatMesh.position.setZ(newValue);
-    }).name('Position Z');
-    //#endregion
+    // benchGUI.add(benchSeatMesh.position, 'z', 0, 5, 0.01).onChange(function(newValue) {
+    //     benchSeatMesh.position.setZ(newValue);
+    // }).name('Position Z');
+    // //#endregion
 
-    //#region Bench Leg Rotation
-    benchGUI.add(benchSeatMesh.rotation, 'x', -H.maxAngle, H.maxAngle, 0.01).onChange(function(newValue) {
-        benchSeatMesh.rotateX(H.getAngle(newValue));
-    }).name('Rotation X');
+    // //#region Bench Leg Rotation
+    // benchGUI.add(benchSeatMesh.rotation, 'x', -H.maxAngle, H.maxAngle, 0.01).onChange(function(newValue) {
+    //     benchSeatMesh.rotateX(H.getAngleDiff(newValue));
+    // }).name('Rotation X');
     
-    benchGUI.add(benchSeatMesh.rotation, 'y', -H.maxAngle, H.maxAngle, 0.01).onChange(function(newValue) {
-        benchSeatMesh.rotateY(H.getAngle(newValue));
-    }).name('Rotation Y');
+    // benchGUI.add(benchSeatMesh.rotation, 'y', -H.maxAngle, H.maxAngle, 0.01).onChange(function(newValue) {
+    //     benchSeatMesh.rotateY(H.getAngleDiff(newValue));
+    // }).name('Rotation Y');
     
-    benchGUI.add(benchSeatMesh.rotation, 'z', -H.maxAngle, H.maxAngle, 0.01).onChange(function(newValue) {
-        benchSeatMesh.rotateZ(H.getAngle(newValue));
-    }).name('Rotation Z');
-    //#endregion
+    // benchGUI.add(benchSeatMesh.rotation, 'z', -H.maxAngle, H.maxAngle, 0.01).onChange(function(newValue) {
+    //     benchSeatMesh.rotateZ(H.getAngleDiff(newValue));
+    // }).name('Rotation Z');
+    // //#endregion
 
-    benchGUI.add(benchSeatMesh, 'visible')
-    .onChange(function(newValue) {
-        benchSeatMesh.visible = newValue;
-    }).name(`${benchSeatMesh.name} is visible`);
+    // benchGUI.add(benchSeatMesh, 'visible')
+    // .onChange(function(newValue) {
+    //     benchSeatMesh.visible = newValue;
+    // }).name(`${benchSeatMesh.name} is visible`);
    
-    benchGUI.open();
+    // benchGUI.open();
 
+    benchSeatMesh.position.set(0, 0, 0);
+    benchSeatMesh.rotateZ(H.degInRad(90));
+    benchSeatMesh.rotateY(H.degInRad(90));
     benchSeatMesh.position.set(pos[0], pos[1], pos[2]);
 
     scene.add(benchSeatMesh);
@@ -181,9 +187,9 @@ export function addBench(scene, textureLoader, gui, count, pos) {
             x = -x;
         }
         
-        addBenchLeg(scene, textureLoader, gui, `Bench ${i} (Leg 1)`, [x - 1, H.bench.initPosY, H.bench.legH / 2]);
-        addBenchLeg(scene, textureLoader, gui, `Bench ${i} (Leg 2)`, [x + 1, H.bench.initPosY, H.bench.legH / 2]);
-        addBenchSeat(scene, textureLoader, gui, `Bench Seat ${i}`, [x, H.bench.initPosY, H.bench.legH + H.bench.seatH / 2]);
+        addBenchLeg(scene, textureLoader, gui, `Bench ${i} (Leg 1)`, [H.bench.initPosY, H.bench.legH / 2, x - 1]);
+        addBenchLeg(scene, textureLoader, gui, `Bench ${i} (Leg 2)`, [H.bench.initPosY, H.bench.legH / 2, x + 1]);
+        addBenchSeat(scene, textureLoader, gui, `Bench Seat ${i}`, [H.bench.initPosY, H.bench.legH + H.bench.seatH / 2, x]);
     }
 }
 

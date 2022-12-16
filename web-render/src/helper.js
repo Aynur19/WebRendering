@@ -3,7 +3,10 @@
 const THREE = require('three')
 
 
-export const maxAngle = Math.PI * 2;
+export const maxAngle = Math.PI;
+export const rotStep = 0.01;
+
+
 export const maxX = 50;
 export const maxY = 25;
 export const maxZ = 5;
@@ -24,6 +27,16 @@ export const paths = {
     envMap: './textures/CubeMaps/',
     envMapExts: ['px.png', 'nx.png', 'py.png', 'ny.png', 'pz.png', 'nz.png'],
 };
+
+export const camera = {
+    pos: { x: 0, y: 1, z: 4 },
+    rot: { x: 0, y: 1, z: 4 },
+    fov: 50,
+    aspect: window.innerWidth / window.innerHeight,
+    near: 0.1,
+    far: 2000,
+    name: 'Camera',
+}
 
 export const bench = {
     legH: 0.4,
@@ -49,8 +62,12 @@ export const bench = {
     initPosY: -20,
 };
 
-export function getAngle(x) {
-    return x * Math.PI / 180;
+export function getAngleDiff(curRads, x) {
+    return (x * Math.PI / 180) - curRads;
+};
+
+export function getPosDiff(curPos, x) {
+    return x - curPos;
 };
 
 
@@ -63,4 +80,8 @@ export function getAngle(x) {
 export function wrapTextureOnMap(map, scaleX, scaleY) {
     map.wrapS = map.wrapT = THREE.RepeatWrapping;
     map.repeat.set(scaleX, scaleY);
+}
+
+export function degInRad(x) {
+    return x * Math.PI / 180;
 }

@@ -2,6 +2,7 @@
 
 const THREE = require('three')
 import * as dat from 'dat.gui';
+import * as H from './helper';
 
 const glSizes = {
     w: 7.32,
@@ -96,6 +97,10 @@ export function addGateLeaves(scene, textureLoader, gui, name, pos) {
     }).name(`${gateLeavesMesh.name} is visible`);
    
     gateLeavesGUI.open();
+    gateLeavesMesh.position.set(0, 0, 0);
+    gateLeavesMesh.rotateZ(H.degInRad(90));
+    gateLeavesMesh.rotateY(H.degInRad(90));
+
     gateLeavesMesh.position.set(pos[0], pos[1], pos[2]);
 
     scene.add(gateLeavesMesh);
