@@ -40,6 +40,10 @@ export const bench = {
         x: 4, 
         y: 4 
     },
+
+    distFromCenter: 15,
+    distBetweenBench: 2,
+    initPosY: -20,
 };
 
 export function getAngle(x) {

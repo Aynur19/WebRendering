@@ -163,3 +163,27 @@ export function addBenchSeat(scene, textureLoader, gui, name, pos) {
     scene.add(benchSeatMesh);
 }
 
+/**
+ * 
+ * @param {THREE.Scene} scene 
+ * @param {THREE.TextureLoader} textureLoader
+ * @param {dat.GUI} gui
+ * @param {Array<number>} pos 
+ */
+export function addBench(scene, textureLoader, gui, count, pos) {
+
+    let i = 0;
+
+    for (let i = 0; i < count; i++) {
+        let x = H.bench.distFromCenter + H.bench.distBetweenBench * (i - i % 2);
+        
+        if(i % 2 == 0) {
+            x = -x;
+        }
+        
+        addBenchLeg(scene, textureLoader, gui, `Bench ${i} (Leg 1)`, [x - 1, H.bench.initPosY, H.bench.legH / 2]);
+        addBenchLeg(scene, textureLoader, gui, `Bench ${i} (Leg 2)`, [x + 1, H.bench.initPosY, H.bench.legH / 2]);
+        addBenchSeat(scene, textureLoader, gui, `Bench Seat ${i}`, [x, H.bench.initPosY, H.bench.legH + H.bench.seatH / 2]);
+    }
+}
+
