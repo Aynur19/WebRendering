@@ -4,16 +4,18 @@
 // const THREE = require('three');
 const THREE = require('three')
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+import { FlyControls } from 'three/examples/jsm/controls/FlyControls'
 import * as Stats from '../node_modules/stats-js/build/stats';
 import * as dat from 'dat.gui';
 import * as fieldObj from './field';
 import * as ballObj from './ball';
 import * as gateLeavesObj from './gateLeaves';
 import * as benchObj from './bench';
+import * as H from './helper';
 
 let gui = new dat.GUI({name: 'Settings'});
 let camera, scene, renderer, light;
-let orbitControls;
+let orbitControls, flyControls;
 let stats = new Stats();
 
 const textureLoader = new THREE.TextureLoader();
@@ -64,6 +66,10 @@ function settingRenderer() {
     renderer.setClearColor(0xf0f0f0);
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
+
+    // renderer.domElement.contentWindow.addEventListener('keyup', flyControls.keyup.bind(flyControls) );
+    // renderer.domElement.contentWindow.addEventListener('keydown', flyControls.keydown.bind(flyControls) );
+
     document.body.appendChild(renderer.domElement);
 }
 
@@ -78,6 +84,26 @@ function settingOrbitControls() {
     camera.controls = orbitControls;
 }
 
+// function settingFlyControls() {
+//     flyControls = new FlyControls(camera, renderer.domElement);
+//     // flyControls.enablePan = true;
+//     // flyControls.enableKeys = false;
+//     // orbitControls.update();
+//     flyControls.dragToLook = true;
+//     flyControls.movementSpeed = 3;
+//     flyControls.rollSpeed = Math.PI / 24;
+//     flyControls.autoForward = false;
+//     flyControls.addEventListener('change', render);
+//     flyControls.addEventListener('change', (evnt) => {
+//         drawDebugInfo(renderer.domElement, ctx_debug, camera, flyControls);
+//     });
+
+//     // Adding orbit controls to camera (expected by AMI image widgets).
+//     camera.controls = flyControls;
+// }
+
+
+
 function settingLight() {
     light = new THREE.PointLight(0xffffff, 1.5);
     light.position.set(-600, 600, 1000);
@@ -90,16 +116,22 @@ function sceneInit() {
     window.addEventListener('resize', onWindowResize, false);
 
     settingOrbitControls();
+    // settingFlyControls();
     settingLight();
+
+
 
     scene = new THREE.Scene();
     scene.add(light);
 
     fieldObj.addField(scene, textureLoader, gui);
-    ballObj.addBall(scene, textureLoader, gui);
+    ballObj.addBall(scene, textureLoader, gui, 'Ball', [0, 0, H.ballR]);
     gateLeavesObj.addGateLeaves(scene, textureLoader, gui, 'Gate Leaves 1', [-40, 0, 0.65]);
     gateLeavesObj.addGateLeaves(scene, textureLoader, gui, 'Gate Leaves 2', [40, 0, 0.65]);
-    benchObj.addBenchLeg(scene, textureLoader, gui, 'Bench 1', [0, 0, 1.25]);
+    benchObj.addBenchLeg(scene, textureLoader, gui, 'Bench 1', [-16, -20, H.bench.legH / 2]);
+    benchObj.addBenchLeg(scene, textureLoader, gui, 'Bench 2', [-14, -20, H.bench.legH / 2]);
+    benchObj.addBenchSeat(scene, textureLoader, gui, 'Bench Seat 2', [-15, -20, H.bench.legH + H.bench.seatH / 2]);
+    // benchObj.addBench(scene, textureLoader, gui, 'Bench Seat 2', H.bench.seatPos);
     // addVor(scene);
 }
 

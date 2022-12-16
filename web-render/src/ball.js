@@ -2,7 +2,7 @@
 
 const THREE = require('three')
 import * as dat from 'dat.gui';
-
+import * as H from './helper';
 
 /**
  * 
@@ -10,8 +10,8 @@ import * as dat from 'dat.gui';
  * @param {THREE.TextureLoader} textureLoader
  * @param {dat.GUI} gui
  */
-export function addBall(scene, textureLoader, gui) {
-    let ballGeom = new THREE.SphereGeometry(0.11, 128, 128);
+export function addBall(scene, textureLoader, gui, name, pos) {
+    let ballGeom = new THREE.SphereGeometry(H.ballR, 128, 128);
     let ballMat = new THREE.MeshStandardMaterial({color: 0x0000ff, roughness: 0.5});
     
     ballMat.map = textureLoader.load('./textures/ball.png');
@@ -19,50 +19,53 @@ export function addBall(scene, textureLoader, gui) {
     ballMat.map.repeat.set(2, 2);
 
     let ballMesh = new THREE.Mesh(ballGeom, ballMat);
-    ballMesh.name = 'Ball';
+    ballMesh.name = name;
 
-    let ballGUI = gui.addFolder('Ball');
+    let ballGUI = gui.addFolder(name);
     
-    ballGUI.add(ballMesh.position, 'x', -300, 300, 1)
+    //#region Ball Position
+    ballGUI.add(ballMesh.position, 'x', -H.maxX, H.maxX, H.posStep)
     .onChange(function(newValue) {
         ballMesh.position.setX(newValue);
     }).name('Position X');
     
-    ballGUI.add(ballMesh.position, 'y', -300, 300, 1)
+    ballGUI.add(ballMesh.position, 'y', -H.maxY, H.maxY, H.posStep)
     .onChange(function(newValue) {
         ballMesh.position.setY(newValue);
     }).name('Position Y');
     
-    ballGUI.add(ballMesh.position, 'z', -300, 300, 1)
+    ballGUI.add(ballMesh.position, 'z', -H.maxZ, H.maxZ, H.posStep)
     .onChange(function(newValue) {
         ballMesh.position.setZ(newValue);
     }).name('Position Z');
+    //#endregion
 
-    ballGUI.add(ballMesh.rotation, 'x', 0, Math.PI*2, 0.01)
+    //#region Ball Rotation
+    ballGUI.add(ballMesh.rotation, 'x', -H.maxAngle, H.maxAngle, 0.01)
     .onChange(function(newValue) {
         ballMesh.rotateX(newValue);
     }).name('Rotation X');
     
-    ballGUI.add(ballMesh.rotation, 'y', 0, Math.PI*2, 0.01)
+    ballGUI.add(ballMesh.rotation, 'y', -H.maxAngle, H.maxAngle, 0.01)
     .onChange(function(newValue) {
         ballMesh.rotateY(newValue);
     }).name('Rotation Y');
     
-    ballGUI.add(ballMesh.rotation, 'z', 0, Math.PI*2, 0.01)
+    ballGUI.add(ballMesh.rotation, 'z', -H.maxAngle, H.maxAngle, 0.01)
     .onChange(function(newValue) {
         ballMesh.rotateZ(newValue);
     }).name('Rotation Z');
+    //#endregion 
 
-
-    ballGUI.add(ballMesh, 'visible')
-    .onChange(function(newValue) {
+    ballGUI.add(ballMesh, 'visible').onChange(function(newValue) {
         ballMesh.visible = newValue;
     }).name(`${ballMesh.name} is visible`);
    
-    ballGUI.open();
+    // ballGUI.open();
 
     // ballMesh.visible = false;
-    ballMesh.position.set(0, 0, 2);
+    ballMesh.position.set(pos[0], pos[1], pos[2]);
+    ballMesh.updateMatrixWorld();
 
     scene.add(ballMesh);
 }
